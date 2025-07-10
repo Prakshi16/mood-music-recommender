@@ -32,8 +32,6 @@ function App() {
       setSong("");
 
       await new Promise((res) => setTimeout(res, 1000));
- // Wait for <img> to render
-
       const detectedMood = await detectMood(imageRef.current);
       setMood(detectedMood);
 
@@ -44,37 +42,43 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6 text-center">
-      <h1 className="text-3xl font-bold mb-6">🎵 Mood-Based Music Recommender</h1>
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 flex items-center justify-center p-6">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl p-8 text-center space-y-6">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-gray-800 flex justify-center items-center gap-2">
+          <span role="img" aria-label="music">🎵</span> Mood-Based Music Recommender
+        </h1>
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        className="mb-4"
-      />
-
-      {preview && (
-        <img
-          ref={imageRef}
-          src={preview}
-          alt="Preview"
-          //className="max-w-xs max-h-80 object-contain rounded-lg shadow-md mb-4"
-          className="w-[300px] h-auto rounded-lg shadow-md object-contain mb-4"
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200"
         />
-      )}
 
-      {mood && (
-        <p className="text-xl">
-          Mood: <strong>{mood.charAt(0).toUpperCase() + mood.slice(1)}</strong>
-        </p>
-      )}
+        {preview && (
+  <div className="w-[250px] h-[250px] overflow-hidden rounded-xl shadow mx-auto mb-4">
+    <img
+      ref={imageRef}
+      src={preview}
+      alt="Uploaded"
+      className="w-full h-full object-cover"
+    />
+  </div>
+)}
 
-      {song && (
-        <p className="mt-2 text-lg">
-          Recommended Song: <strong>{song}</strong>
-        </p>
-      )}
+
+        {mood && (
+          <div className="text-lg text-gray-700">
+            Mood: <span className="font-bold text-purple-700 capitalize">{mood}</span>
+          </div>
+        )}
+
+        {song && (
+          <div className="text-md text-gray-800">
+            Recommended Song: <span className="font-semibold">{song}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
